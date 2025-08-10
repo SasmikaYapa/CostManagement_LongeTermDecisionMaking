@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPV Calculator in LKR</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>/* Basic styling for the entire page */
+/* Basic styling for the entire page */
+/* Basic styling for the entire page */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Container styling for improved layout */
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Label styling */
+label {
+    font-weight: bold;
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Enhanced input field styling */
+input[type="number"],
+input[type="text"] {
+    padding: 14px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+    border-color: #0056b3;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 86, 179, 0.2);
+}
+
+/* Button styling with added effects */
+button {
+    padding: 14px 24px;
+    font-size: 18px;
+    background-color: #0056b3;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #003d7a;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Result section styling */
+#result {
+    margin-top: 30px;
+}
+
+#npvResult {
+    font-size: 30px;
+    color: #28a745;
+    font-weight: 600;
+}
+
+/* Detailed calculation steps styling */
+#calculationSteps {
+    margin-top: 30px;
+    text-align: left;
+    font-size: 18px;
+}
+
+#calculationSteps h2 {
+    font-size: 24px;
+    color: #333;
+    border-bottom: 2px solid #0056b3;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+#calculationSteps ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#calculationSteps li {
+    margin: 20px 0;
+    padding: 12px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+        font-size: 16px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+
+    #npvResult {
+        font-size: 26px;
+    }
+
+    #calculationSteps h2 {
+        font-size: 22px;
+    }
+}
+</style>
+<body>
+    <div class="container">
+        <h1>NPV Calculator (in LKR)</h1>
+        <form id="npv-form">
+            <label for="initialInvestment">Initial Investment (LKR):</label>
+            <input type="text" id="initialInvestment" placeholder="Enter initial investment (e.g., 10,000 or 10M or 10B)" required>
+
+            <label for="cashFlows">Cash Flows (LKR):</label>
+            <input type="text" id="cashFlows" placeholder="Enter cash flows separated by commas (e.g., 5K, 6K, 7K or 1M, 2M, 3M)" required>
+
+            <label for="discountRate">Discount Rate (%):</label>
+            <input type="number" id="discountRate" step="0.01" placeholder="Enter discount rate" required>
+
+            <button type="button" onclick="calculateNPV()">Calculate NPV</button>
+        </form>
+
+        <div id="result">
+            <h2>Net Present Value (NPV):</h2>
+            <p id="npvResult">LKR 0.00</p>
+        </div>
+        
+        <!-- Section to display detailed calculation steps -->
+        <div id="calculationSteps">
+            <!-- Detailed steps will be added here by JavaScript -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+<script>
+function parseAmount(amountStr) {
+    if (!amountStr) return 0;
+    amountStr = amountStr.trim().toUpperCase();
+    
+    let multiplier = 1;
+    if (amountStr.endsWith('K')) {
+        multiplier = 1000;
+        amountStr = amountStr.slice(0, -1);
+    } else if (amountStr.endsWith('M')) {
+        multiplier = 1000000;
+        amountStr = amountStr.slice(0, -1);
+    } else if (amountStr.endsWith('B')) {
+        multiplier = 1000000000;
+        amountStr = amountStr.slice(0, -1);
+    }
+    
+    return parseFloat(amountStr.replace(/,/g, '')) * multiplier;
+}
+
+function formatNumber(num) {
+    return num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function calculateNPV() {
+    const initialInvestmentStr = document.getElementById('initialInvestment').value;
+    const cashFlowsStr = document.getElementById('cashFlows').value.split(',').map(str => str.trim());
+    const discountRate = parseFloat(document.getElementById('discountRate').value) / 100;
+
+    const initialInvestment = parseAmount(initialInvestmentStr);
+    const cashFlows = cashFlowsStr.map(parseAmount);
+
+    let npv = -initialInvestment;
+    let detailedSteps = `<h2>Calculation Steps:</h2><ul>`;
+    detailedSteps += `<li><strong>Initial Investment:</strong> LKR ${formatNumber(initialInvestment)}</li>`;
+
+    for (let i = 0; i < cashFlows.length; i++) {
+        let cashFlow = cashFlows[i];
+        let year = i + 1;
+        let discountFactor = Math.pow(1 + discountRate, year);
+        let pv = cashFlow / discountFactor;
+        npv += pv;
+
+        detailedSteps += `<li>Year ${year}: Cash Flow = LKR ${formatNumber(cashFlow)}, Discount Factor = ${(1 + discountRate).toFixed(2)}^${year} = ${formatNumber(discountFactor.toFixed(2))}, Present Value = LKR ${formatNumber(pv.toFixed(2))}</li>`;
+    }
+
+    detailedSteps += `<li><strong>Net Present Value (NPV) Calculation:</strong> -LKR ${formatNumber(initialInvestment)} + Sum of Present Values = LKR ${formatNumber(npv.toFixed(2))}</li>`;
+    detailedSteps += `</ul>`;
+    
+    document.getElementById('calculationSteps').innerHTML = detailedSteps;
+    document.getElementById('npvResult').innerText = `LKR ${formatNumber(npv.toFixed(2))}`;
+}
+</script>
+</html>

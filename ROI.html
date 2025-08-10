@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROI Calculator</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e9f7ef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        /* Container for the calculator */
+        .container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 100px;
+            width: 1200px;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        /* Heading style */
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* ROI Description styles */
+        .description {
+            background-color: #e9f7ef;
+            padding: 30px;
+            border-left: 5px solid #28a745;
+            margin-bottom: 25px;
+            text-align: left;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .description strong {
+            color: #28a745;
+        }
+
+        /* Formula highlight */
+        .formula {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Form label and input field styles */
+        label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+            text-align: left;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4CAF50;
+        }
+
+        /* Button style */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Result display styles */
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #calculation-steps {
+            margin-top: 15px;
+            font-size: 16px;
+            color: #555;
+            text-align: left;
+        }
+
+        /* Comments on ROI values */
+        #comments {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Heading for the calculator -->
+        <h1>ROI Calculator</h1>
+
+        <!-- ROI Description -->
+        <div class="description">
+            <p><strong>Return on Investment (ROI)</strong> is a profitability ratio that helps measure the efficiency of an investment. The formula is:</p>
+            <div class="formula">ROI = (Net Profit / Cost of Investment) × 100</div>
+            <p>This tool helps you calculate the percentage return on both short-term and long-term investments. Simply enter your <strong>Net Profit</strong> and <strong>Cost of Investment</strong> to get the result.</p>
+        </div>
+
+        <!-- Input for Net Profit -->
+        <label for="net-profit">Net Profit (LKR):</label>
+        <input type="number" id="net-profit" placeholder="Enter net profit" required>
+
+        <!-- Input for Cost of Investment -->
+        <label for="investment-cost">Cost of Investment (LKR):</label>
+        <input type="number" id="investment-cost" placeholder="Enter investment cost" required>
+
+        <!-- Button to calculate ROI -->
+        <button onclick="calculateROI()">Calculate ROI</button>
+
+        <!-- Display ROI result -->
+        <div id="result"></div>
+
+        <!-- Display calculation steps -->
+        <div id="calculation-steps"></div>
+
+        <!-- Display comments based on ROI result -->
+        <div id="comments"></div>
+    </div>
+
+    <script>
+        // Function to calculate ROI and show the calculation steps
+        function calculateROI() {
+            // Get values from input fields
+            let netProfit = document.getElementById('net-profit').value;
+            let investmentCost = document.getElementById('investment-cost').value;
+            let result = document.getElementById('result');
+            let steps = document.getElementById('calculation-steps');
+            let comments = document.getElementById('comments');
+
+            // Ensure both values are entered and valid
+            if (netProfit && investmentCost && investmentCost > 0) {
+                // Calculate ROI
+                let roi = (netProfit / investmentCost) * 100;
+                result.innerHTML = `<strong>ROI: ${roi.toFixed(2)}%</strong>`; // Display the ROI percentage
+
+                // Display the calculation steps
+                steps.innerHTML = `
+                    <p><strong>Calculation Steps:</strong></p>
+                    <p>1. Net Profit: LKR ${netProfit}</p>
+                    <p>2. Cost of Investment: LKR ${investmentCost}</p>
+                    <p>3. ROI = (Net Profit / Cost of Investment) × 100</p>
+                    <p>4. ROI = (${netProfit} / ${investmentCost}) × 100 = <strong>${roi.toFixed(2)}%</strong></p>
+                `;
+
+                // Provide comments based on ROI value
+                if (roi > 100) {
+                    comments.innerHTML = "Excellent return! This investment is highly profitable.";
+                } else if (roi > 50) {
+                    comments.innerHTML = "Good return! The investment is performing well.";
+                } else if (roi > 0) {
+                    comments.innerHTML = "Moderate return. The investment is making a profit.";
+                } else if (roi == 0) {
+                    comments.innerHTML = "No return. You're breaking even on this investment.";
+                } else {
+                    comments.innerHTML = "Loss! This investment is losing money.";
+                }
+            } else {
+                // If inputs are invalid or empty
+                result.innerHTML = '';
+                steps.innerHTML = '';
+                comments.innerHTML = 'Please enter valid values for both fields.';
+            }
+        }
+    </script>
+</body>
+</html>

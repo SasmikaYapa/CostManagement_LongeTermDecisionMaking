@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short-Term vs Long-Term Investment Comparison</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            width: 700px;
+            max-width: 100%;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            background-color: #e7f3fe;
+            padding: 15px;
+            border-left: 5px solid #007bff;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .description strong {
+            color: #0056b3;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+       /* Styles for the result display */
+#result {
+    background-color: #e7f3fe; /* Light blue background */
+    border: 1px solid #007bff; /* Blue border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding inside the result box */
+    margin-top: 20px; /* Margin above the result box */
+    font-size: 20px; /* Larger font size */
+    color: #0056b3; /* Dark blue text color */
+    text-align: center; /* Center text */
+}
+
+/* Styles for calculation steps */
+#calculation-steps {
+    background-color: #f1f1f1; /* Light gray background */
+    border-left: 5px solid #ffc107; /* Yellow left border */
+    padding: 10px; /* Padding inside the calculation steps box */
+    margin-top: 10px; /* Margin above the calculation steps box */
+}
+
+/* Styles for comments on the result interpretation */
+#comments {
+    background-color: #d4edda; /* Light green background */
+    border: 1px solid #28a745; /* Green border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Padding inside the comments box */
+    margin-top: 10px; /* Margin above the comments box */
+    color: #155724; /* Dark green text color */
+    text-align: center; /* Center text */
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Short-Term vs Long-Term Investment Comparison</h1>
+
+        <!-- Description of Investment Comparison -->
+        <div class="description">
+            <p>The comparison between <strong>short-term and long-term investments</strong> is based on the principles of <strong>risk and return trade-off</strong>. Short-term investments tend to have lower risks and returns, while long-term investments often involve higher risks but potentially greater returns.</p>
+            <p>This tool allows you to input investment amounts and expected returns to compare potential profits over time.</p>
+        </div>
+
+        <label for="short-term-investment">Short-Term Investment Amount (LKR):</label>
+        <input type="number" id="short-term-investment" placeholder="Enter short-term investment amount" required>
+
+        <label for="short-term-return">Expected Short-Term Return (%):</label>
+        <input type="number" id="short-term-return" placeholder="Enter expected return percentage" required>
+
+        <label for="long-term-investment">Long-Term Investment Amount (LKR):</label>
+        <input type="number" id="long-term-investment" placeholder="Enter long-term investment amount" required>
+
+        <label for="long-term-return">Expected Long-Term Return (%):</label>
+        <input type="number" id="long-term-return" placeholder="Enter expected return percentage" required>
+
+        <!-- Button to trigger the calculations -->
+        <button onclick="compareInvestments()">Compare Investments</button>
+
+        <!-- Display of result -->
+        <div id="result"></div>
+
+        <!-- Calculation steps display -->
+        <div id="calculation-steps"></div>
+
+        <!-- Comments on the result interpretation -->
+        <div id="comments"></div>
+    </div>
+
+    <script>
+        // Function to compare short-term and long-term investments
+        function compareInvestments() {
+            let shortTermInvestment = parseFloat(document.getElementById('short-term-investment').value);
+            let shortTermReturn = parseFloat(document.getElementById('short-term-return').value) / 100;
+            let longTermInvestment = parseFloat(document.getElementById('long-term-investment').value);
+            let longTermReturn = parseFloat(document.getElementById('long-term-return').value) / 100;
+
+            let result = document.getElementById('result');
+            let steps = document.getElementById('calculation-steps');
+            let comments = document.getElementById('comments');
+
+            // Validate inputs
+            if (isNaN(shortTermInvestment) || isNaN(shortTermReturn) || isNaN(longTermInvestment) || isNaN(longTermReturn)) {
+                result.innerHTML = "Please enter valid numbers for all fields.";
+                steps.innerHTML = '';
+                comments.innerHTML = '';
+                return;
+            }
+
+            // Calculate returns
+            let shortTermProfit = shortTermInvestment * (1 + shortTermReturn);
+            let longTermProfit = longTermInvestment * (1 + longTermReturn);
+
+            // Interpretation and Display
+            result.innerHTML = `
+                <strong>Short-Term Investment Total: LKR ${shortTermProfit.toFixed(2)}</strong><br>
+                <strong>Long-Term Investment Total: LKR ${longTermProfit.toFixed(2)}</strong>
+            `;
+
+            steps.innerHTML = `
+                <p><strong>Calculation Steps:</strong></p>
+                <p>1. Short-Term Profit = Investment Amount × (1 + Short-Term Return)</p>
+                <p>2. Long-Term Profit = Investment Amount × (1 + Long-Term Return)</p>
+            `;
+
+            // Interpretation based on results
+            if (shortTermProfit > longTermProfit) {
+                comments.innerHTML = "The short-term investment is more profitable in this scenario.";
+            } else if (shortTermProfit < longTermProfit) {
+                comments.innerHTML = "The long-term investment is more profitable in this scenario.";
+            } else {
+                comments.innerHTML = "Both investments yield the same profit.";
+            }
+        }
+    </script>
+
+</body>
+</html>

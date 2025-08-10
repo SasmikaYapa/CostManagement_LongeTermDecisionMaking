@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capital Budgeting Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            width: 950px;
+            max-width: 100%;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            background-color: #d0ebff;
+            padding: 15px;
+            border-left: 5px solid #007bff;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .description strong {
+            color: #0056b3;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result, #calculation-steps, #comments {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #calculation-steps, #comments {
+            font-size: 16px;
+            color: #555;
+            text-align: left;
+        }
+
+        .cash-flow-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .cash-flow-input {
+            flex-grow: 1;
+        }
+
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            background-color: #c82333;
+        }
+
+        .add-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .add-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Capital Budgeting Calculator</h1>
+
+        <!-- Description of Capital Budgeting -->
+        <div class="description">
+            <p><strong>Capital Budgeting</strong> is the process businesses use to evaluate large investments. Techniques like Net Present Value (NPV), Internal Rate of Return (IRR), and Payback Period help determine if an investment should be made.</p>
+            <p>The <strong>Net Present Value (NPV)</strong> calculates the present value of future cash flows to determine profitability. The <strong>Internal Rate of Return (IRR)</strong> calculates the discount rate that makes NPV zero. The <strong>Payback Period</strong> determines how quickly the investment recovers its initial cost.</p>
+        </div>
+
+        <!-- Input fields for Investment Cost, Discount Rate, and dynamic Cash Flows -->
+        <label for="initial-investment">Initial Investment (LKR):</label>
+        <input type="number" id="initial-investment" placeholder="Enter the initial investment" required>
+
+        <label for="discount-rate">Discount Rate (%):</label>
+        <input type="number" id="discount-rate" placeholder="Enter the discount rate" required>
+
+        <label>Cash Flows (LKR):</label>
+        <div id="cash-flows-container">
+            <div class="cash-flow-group">
+                <input type="number" class="cash-flow-input" placeholder="Enter cash flow" required>
+                <button class="remove-btn" onclick="removeCashFlow(this)">Remove</button>
+            </div>
+        </div>
+        <button class="add-btn" onclick="addCashFlow()">Add Cash Flow</button>
+
+        <!-- Button to trigger the calculations -->
+        <button onclick="calculateCapitalBudgeting()">Calculate Metrics</button>
+
+        <!-- Display of result -->
+        <div id="result"></div>
+
+        <!-- Calculation steps display -->
+        <div id="calculation-steps"></div>
+
+        <!-- Comments on the result interpretation -->
+        <div id="comments"></div>
+    </div>
+
+    <script>
+        // Function to add a new cash flow input field
+        function addCashFlow() {
+            const cashFlowsContainer = document.getElementById('cash-flows-container');
+            const cashFlowGroup = document.createElement('div');
+            cashFlowGroup.className = 'cash-flow-group';
+            cashFlowGroup.innerHTML = `
+                <input type="number" class="cash-flow-input" placeholder="Enter cash flow" required>
+                <button class="remove-btn" onclick="removeCashFlow(this)">Remove</button>
+            `;
+            cashFlowsContainer.appendChild(cashFlowGroup);
+        }
+
+        // Function to remove a cash flow input field
+        function removeCashFlow(button) {
+            const cashFlowGroup = button.parentElement;
+            cashFlowGroup.remove();
+        }
+
+        // Function to calculate NPV, IRR, and Payback Period
+        function calculateCapitalBudgeting() {
+            let initialInvestment = parseFloat(document.getElementById('initial-investment').value);
+            let discountRate = parseFloat(document.getElementById('discount-rate').value) / 100;
+            let cashFlowInputs = document.querySelectorAll('.cash-flow-input');
+            let result = document.getElementById('result');
+            let steps = document.getElementById('calculation-steps');
+            let comments = document.getElementById('comments');
+
+            // Parse the cash flows input
+            let cashFlows = Array.from(cashFlowInputs).map(input => parseFloat(input.value));
+
+            // Validate inputs
+            if (isNaN(initialInvestment) || isNaN(discountRate) || cashFlows.some(isNaN)) {
+                result.innerHTML = "Please enter valid numbers for all fields.";
+                steps.innerHTML = '';
+                comments.innerHTML = '';
+                return;
+            }
+
+            // NPV Calculation
+            let npv = 0;
+            for (let i = 0; i < cashFlows.length; i++) {
+                npv += cashFlows[i] / Math.pow(1 + discountRate, i + 1);
+            }
+            npv -= initialInvestment;
+
+            // Payback Period Calculation
+            let cumulativeCashFlow = 0;
+            let paybackPeriod = 0;
+            for (let i = 0; i < cashFlows.length; i++) {
+                cumulativeCashFlow += cashFlows[i];
+                if (cumulativeCashFlow >= initialInvestment) {
+                    paybackPeriod = i + 1;
+                    break;
+                }
+            }
+
+            // Interpretation and Display
+            result.innerHTML = `
+                <strong>NPV: LKR ${npv.toFixed(2)}</strong><br>
+                <strong>Payback Period: ${paybackPeriod} years</strong>
+            `;
+
+            steps.innerHTML = `
+                <p><strong>Calculation Steps:</strong></p>
+                <p>1. NPV = Σ (Cash Flow / (1 + Discount Rate)^n) - Initial Investment</p>
+                <p>2. Payback Period: Year when cumulative cash flows recover the initial investment.</p>
+            `;
+
+            // Interpretation based on NPV
+            if (npv > 0) {
+                comments.innerHTML = "The investment is profitable as the NPV is positive.";
+            } else if (npv === 0) {
+                comments.innerHTML = "The investment breaks even as the NPV is zero.";
+            } else {
+                comments.innerHTML = "The investment is not profitable as the NPV is negative.";
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRR Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            color: #34495e;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px; /* Add spacing between buttons */
+        }
+
+        .addCashFlowBtn {
+            background-color: #27ae60; /* Green color */
+            color: white;
+        }
+
+        .addCashFlowBtn:hover {
+            background-color: #1e8449; /* Darker green on hover */
+        }
+
+        .calculateIRRBtn {
+            background-color: #3498db; /* Blue color */
+            color: white;
+        }
+
+        .calculateIRRBtn:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+
+        .result {
+            margin-top: 30px;
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #bdc3c7;
+        }
+
+        .result h2 {
+            font-size: 24px;
+            color: #16a085;
+        }
+
+        #irrResult {
+            font-size: 22px;
+            color: #e74c3c;
+            margin-top: 10px;
+        }
+
+        #irrComment {
+            font-size: 16px;
+            color: #2c3e50;
+            margin-top: 15px;
+        }
+
+        .steps {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #dcdcdc;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        .steps h3 {
+            font-size: 22px;
+            color: #16a085;
+            margin-bottom: 15px;
+        }
+
+        .steps ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .steps ul li {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-bottom: 1px solid #dcdcdc;
+        }
+
+        .steps ul li:last-child {
+            border-bottom: none;
+        }
+.clearBtn {
+    background-color: #e74c3c; /* Red color */
+    color: white;
+}
+
+.clearBtn:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Internal Rate of Return (IRR) Calculator</h1>
+        <p>Enter the initial investment and add cash flows for each stage (year or period) to calculate the IRR and see the steps.</p>
+
+        <form id="irrForm">
+            <label for="initialInvestment">Initial Investment (LKR):</label>
+            <input type="number" id="initialInvestment" placeholder="Enter Initial Investment" required>
+
+            <label for="cashFlowStage">Cash Flow (Stage 1) (LKR):</label>
+            <input type="number" id="cashFlowStage" placeholder="Enter Cash Flow" required>
+
+            <button type="button" class="addCashFlowBtn" onclick="addCashFlow()">Add Cash Flow</button>
+            <button type="button" class="calculateIRRBtn" onclick="calculateIRR()">Calculate IRR</button>
+        </form>
+
+        <div class="result">
+            <h2>Result:</h2>
+            <p id="irrResult"></p>
+            <p id="irrComment"></p> <!-- New section for the IRR comment -->
+        </div>
+
+        <div class="steps">
+            <h3>Calculation Steps:</h3>
+            <ul id="stepsList"></ul>
+        </div>
+<button type="button" class="clearBtn" onclick="clearForm()">Clear</button>
+
+    </div>
+
+    <script>
+        let cashFlows = [];
+        let stage = 1;
+
+        function addCashFlow() {
+            const cashFlowStage = parseFloat(document.getElementById('cashFlowStage').value);
+            if (isNaN(cashFlowStage)) return;
+
+            cashFlows.push(cashFlowStage);
+            const stepsList = document.getElementById('stepsList');
+
+            const li = document.createElement('li');
+            li.innerText = `Stage ${stage}: LKR ${formatNumber(cashFlowStage)}`;
+            stepsList.appendChild(li);
+
+            document.getElementById('cashFlowStage').value = '';
+            document.getElementById('cashFlowStage').placeholder = `Cash Flow (Stage ${++stage}) (LKR):`;
+        }
+
+        function calculateIRR() {
+            const initialInvestment = parseFloat(document.getElementById('initialInvestment').value);
+            if (isNaN(initialInvestment) || cashFlows.length === 0) {
+                document.getElementById('irrResult').innerText = "Invalid Input. Please check.";
+                document.getElementById('irrComment').innerText = ""; // Clear comment if input is invalid
+                return;
+            }
+
+            let irr = guessIRR(initialInvestment, cashFlows);
+            if (irr !== null) {
+                document.getElementById('irrResult').innerText = `The IRR is ${irr.toFixed(2)}%`;
+                document.getElementById('irrComment').innerText = getIRRComment(irr);
+            } else {
+                document.getElementById('irrResult').innerText = "Calculation Failed";
+                document.getElementById('irrComment').innerText = ""; // Clear comment if calculation fails
+            }
+
+            showCalculationSteps(initialInvestment, cashFlows, irr);
+        }
+
+        function guessIRR(initialInvestment, cashFlows, guess = 0.1) {
+            let iterationLimit = 1000;
+            let precision = 1e-6;
+            let irr = guess;
+
+            for (let i = 0; i < iterationLimit; i++) {
+                let npv = calculateNPV(initialInvestment, cashFlows, irr);
+                let derivativeNPV = calculateDerivativeNPV(initialInvestment, cashFlows, irr);
+
+                let newIrr = irr - npv / derivativeNPV;
+
+                if (Math.abs(newIrr - irr) < precision) {
+                    return irr * 100;
+                }
+                irr = newIrr;
+            }
+            return null;
+        }
+
+        function calculateNPV(initialInvestment, cashFlows, rate) {
+            let npv = -initialInvestment;
+            for (let t = 0; t < cashFlows.length; t++) {
+                npv += cashFlows[t] / Math.pow(1 + rate, t + 1);
+            }
+            return npv;
+        }
+
+        function calculateDerivativeNPV(initialInvestment, cashFlows, rate) {
+            let derivativeNPV = 0;
+            for (let t = 0; t < cashFlows.length; t++) {
+                derivativeNPV -= (t + 1) * cashFlows[t] / Math.pow(1 + rate, t + 2);
+            }
+            return derivativeNPV;
+        }
+
+        function showCalculationSteps(initialInvestment, cashFlows, irr) {
+            const stepsList = document.getElementById('stepsList');
+            stepsList.innerHTML = '';
+
+            let stepHTML = `<li>Initial Investment: LKR ${formatNumber(initialInvestment)}</li>`;
+            for (let i = 0; i < cashFlows.length; i++) {
+                stepHTML += `<li>Cash Flow for Stage ${i + 1}: LKR ${formatNumber(cashFlows[i])}</li>`;
+            }
+
+            if (irr !== null) {
+                stepHTML += `<li>Estimated IRR: ${irr.toFixed(2)}%</li>`;
+            } else {
+                stepHTML += `<li>Could not calculate IRR.</li>`;
+            }
+
+            stepsList.innerHTML = stepHTML;
+        }
+
+        function formatNumber(number) {
+            return number.toLocaleString('en-LK');
+        }
+
+        function getIRRComment(irr) {
+            if (irr >= 30) {
+                return "The calculated Internal Rate of Return (IRR) is quite high at " + irr.toFixed(2) + "%. This indicates that the investment is expected to yield a significant return per period, assuming the projected cash flows are accurate.";
+            } else if (irr >= 10) {
+                return "The IRR is " + irr.toFixed(2) + "%, which suggests a moderate return on investment. This is a reasonable rate, but it is advisable to compare it with other investment opportunities.";
+            } else {
+                return "The IRR of " + irr.toFixed(2) + "% indicates a relatively low return on investment. It may be worth re-evaluating the projected cash flows or considering alternative investments.";
+            }
+        }
+function clearForm() {
+    document.getElementById('irrForm').reset(); // Reset form fields
+    cashFlows = []; // Clear the cash flows array
+    stage = 1; // Reset the stage counter
+
+    // Clear results and steps
+    document.getElementById('irrResult').innerText = '';
+    document.getElementById('irrComment').innerText = '';
+    document.getElementById('stepsList').innerHTML = '';
+}
+
+    </script>
+</body>
+</html>

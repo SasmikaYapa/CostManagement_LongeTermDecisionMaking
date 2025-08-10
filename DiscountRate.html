@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discounted Cash Flow (DCF) Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            width: 700px;
+            max-width: 100%;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            background-color: #e7f3fe;
+            padding: 15px;
+            border-left: 5px solid #007bff;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .description strong {
+            color: #0056b3;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result, #calculation-steps, #comments {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        #calculation-steps, #comments {
+            font-size: 16px;
+            color: #555;
+            text-align: left;
+        }
+
+        .cash-flow-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .cash-flow-input {
+            flex-grow: 1;
+        }
+
+        .remove-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            background-color: #c82333;
+        }
+
+        .add-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .add-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Discounted Cash Flow (DCF) Analysis</h1>
+
+        <!-- Description of DCF -->
+        <div class="description">
+            <p><strong>Discounted Cash Flow (DCF)</strong> analysis is a method used to value an investment based on its expected future cash flows. By estimating these cash flows for each period and discounting them back to their present value using a discount rate, investors can evaluate the attractiveness of an investment opportunity.</p>
+            <p>The formula for DCF is as follows:</p>
+            <p><strong>DCF = Cash Flow / (1 + Discount Rate)^t</strong></p>
+            <p>The DCF model is embedded in the calculations of NPV and IRR, providing insights into the financial viability of short-term and long-term projects.</p>
+        </div>
+
+        <!-- Input fields for Initial Investment, Discount Rate, and dynamic Cash Flows -->
+        <label for="discount-rate">Discount Rate (%):</label>
+        <input type="number" id="discount-rate" placeholder="Enter the discount rate" required>
+
+        <label>Cash Flows (LKR):</label>
+        <div id="cash-flows-container">
+            <div class="cash-flow-group">
+                <input type="number" class="cash-flow-input" placeholder="Enter cash flow" required>
+                <button class="remove-btn" onclick="removeCashFlow(this)">Remove</button>
+            </div>
+        </div>
+        <button class="add-btn" onclick="addCashFlow()">Add Cash Flow</button>
+
+        <!-- Button to trigger the calculations -->
+        <button onclick="calculateDCF()">Calculate DCF Metrics</button>
+
+        <!-- Display of result -->
+        <div id="result"></div>
+
+        <!-- Calculation steps display -->
+        <div id="calculation-steps"></div>
+
+        <!-- Comments on the result interpretation -->
+        <div id="comments"></div>
+    </div>
+
+    <script>
+        // Function to add a new cash flow input field
+        function addCashFlow() {
+            const cashFlowsContainer = document.getElementById('cash-flows-container');
+            const cashFlowGroup = document.createElement('div');
+            cashFlowGroup.className = 'cash-flow-group';
+            cashFlowGroup.innerHTML = `
+                <input type="number" class="cash-flow-input" placeholder="Enter cash flow" required>
+                <button class="remove-btn" onclick="removeCashFlow(this)">Remove</button>
+            `;
+            cashFlowsContainer.appendChild(cashFlowGroup);
+        }
+
+        // Function to remove a cash flow input field
+        function removeCashFlow(button) {
+            const cashFlowGroup = button.parentElement;
+            cashFlowGroup.remove();
+        }
+
+        // Function to calculate DCF, NPV, and IRR
+        function calculateDCF() {
+            let discountRate = parseFloat(document.getElementById('discount-rate').value) / 100;
+            let cashFlowInputs = document.querySelectorAll('.cash-flow-input');
+            let result = document.getElementById('result');
+            let steps = document.getElementById('calculation-steps');
+            let comments = document.getElementById('comments');
+
+            // Parse the cash flows input
+            let cashFlows = Array.from(cashFlowInputs).map(input => parseFloat(input.value));
+
+            // Validate inputs
+            if (isNaN(discountRate) || cashFlows.some(isNaN)) {
+                result.innerHTML = "Please enter valid numbers for all fields.";
+                steps.innerHTML = '';
+                comments.innerHTML = '';
+                return;
+            }
+
+            // DCF Calculation
+            let dcf = 0;
+            for (let t = 0; t < cashFlows.length; t++) {
+                dcf += cashFlows[t] / Math.pow(1 + discountRate, t + 1);
+            }
+
+            // NPV Calculation (Assuming an initial investment of zero for demonstration)
+            let npv = dcf;
+
+            // Interpretation and Display
+            result.innerHTML = `
+                <strong>DCF: LKR ${dcf.toFixed(2)}</strong><br>
+                <strong>NPV (assuming initial investment of 0): LKR ${npv.toFixed(2)}</strong>
+            `;
+
+            steps.innerHTML = `
+                <p><strong>Calculation Steps:</strong></p>
+                <p>1. DCF = Σ (Cash Flow / (1 + Discount Rate)^t)</p>
+                <p>2. NPV = DCF - Initial Investment (0 in this case)</p>
+            `;
+
+            // Interpretation based on DCF
+            if (dcf > 0) {
+                comments.innerHTML = "The investment is attractive as the DCF is positive.";
+            } else if (dcf === 0) {
+                comments.innerHTML = "The investment breaks even as the DCF is zero.";
+            } else {
+                comments.innerHTML = "The investment is not attractive as the DCF is negative.";
+            }
+        }
+    </script>
+
+</body>
+</html>
