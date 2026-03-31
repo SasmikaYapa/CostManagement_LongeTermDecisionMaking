@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vesak Financial — Long-Term Decision & Cost Analysis</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Serif+Sinhala:wght@300;400;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --saffron: #E8810A;
+    --gold: #C9931A;
+    --deep-maroon: #6B1A1A;
+    --crimson: #A0272A;
+    --ivory: #FAF6EE;
+    --warm-white: #FEF9F2;
+    --lotus-pink: #D4547A;
+    --teal: #1A7A6E;
+    --dark-teal: #0F4F47;
+    --text-dark: #1C1410;
+    --text-mid: #4A3728;
+    --text-light: #8B6D5A;
+    --border: rgba(200, 147, 26, 0.25);
+    --shadow: 0 8px 40px rgba(107,26,26,0.12);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ── BATIK PATTERN OVERLAY ── */
+  body::before {
+    content:'';
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(232,129,10,0.04) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(160,39,42,0.04) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9931A' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    padding: 0 48px;
+    height: 72px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(250,246,238,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .nav-logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 2px 12px rgba(232,129,10,0.4);
+  }
+
+  .nav-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--deep-maroon);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo-sub {
+    font-size: 0.65rem; font-weight: 400;
+    color: var(--text-light);
+    letter-spacing: 0.08em; text-transform: uppercase;
+    display: block; margin-top: -2px;
+  }
+
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; font-size: 0.85rem; font-weight: 500;
+    color: var(--text-mid); letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--saffron); }
+
+  .nav-cta {
+    background: var(--deep-maroon); color: var(--ivory) !important;
+    padding: 8px 20px; border-radius: 4px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--crimson) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; z-index:1;
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset:0; z-index:-1;
+    background:
+      linear-gradient(135deg, rgba(107,26,26,0.06) 0%, transparent 60%),
+      linear-gradient(to bottom, var(--ivory), var(--warm-white));
+  }
+
+  /* Decorative mandala rings */
+  .hero-mandala {
+    position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+    width: 580px; height: 580px; z-index: 0;
+    opacity: 0.12;
+  }
+
+  .hero-content {
+    position: relative; z-index:1;
+    max-width: 680px;
+    animation: fadeUp 0.9s ease both;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--saffron);
+    margin-bottom: 24px;
+  }
+
+  .hero-eyebrow::before {
+    content:''; width: 28px; height: 2px; background: var(--saffron);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5vw, 4.2rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+  }
+
+  .hero-title em {
+    font-style: italic; color: var(--crimson);
+  }
+
+  .hero-sinhala {
+    font-family: 'Noto Serif Sinhala', serif;
+    font-size: 1.1rem; color: var(--text-light);
+    margin-bottom: 28px;
+    opacity: 0.9;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem; line-height: 1.75; color: var(--text-mid);
+    max-width: 560px; margin-bottom: 44px;
+  }
+
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--saffron), var(--gold));
+    color: white; border: none; padding: 14px 32px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 0.04em; cursor: pointer; border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(232,129,10,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(232,129,10,0.45);
+  }
+
+  .btn-secondary {
+    background: transparent; color: var(--deep-maroon);
+    border: 1.5px solid var(--deep-maroon); padding: 13px 30px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; border-radius: 4px; letter-spacing: 0.04em;
+    transition: all 0.2s; text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover {
+    background: var(--deep-maroon); color: var(--ivory);
+  }
+
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 60px;
+    padding-top: 40px; border-top: 1px solid var(--border);
+  }
+
+  .hero-stat {}
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 700; color: var(--deep-maroon);
+    display: block;
+  }
+  .hero-stat-label {
+    font-size: 0.78rem; color: var(--text-light);
+    letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500;
+  }
+
+  /* ── SECTION SHARED ── */
+  section { position: relative; z-index:1; }
+
+  .section-header {
+    text-align: center; max-width: 600px; margin: 0 auto 64px;
+  }
+  .section-eyebrow {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--saffron); margin-bottom: 16px;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 800; color: var(--text-dark);
+    line-height: 1.2; margin-bottom: 16px;
+  }
+  .section-desc { font-size: 1rem; color: var(--text-light); line-height: 1.7; }
+
+  /* ── FEATURES ── */
+  .features {
+    padding: 96px 48px;
+    background: var(--ivory);
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px; max-width: 1200px; margin: 0 auto;
+  }
+
+  .feature-card {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 36px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card::after {
+    content:''; position:absolute; top:0; left:0; right:0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--saffron), var(--lotus-pink));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .feature-card:hover::after { transform: scaleX(1); }
+
+  .feature-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; margin-bottom: 20px;
+  }
+
+  .fi-saffron { background: rgba(232,129,10,0.12); }
+  .fi-crimson { background: rgba(160,39,42,0.1); }
+  .fi-teal    { background: rgba(26,122,110,0.1); }
+  .fi-gold    { background: rgba(201,147,26,0.12); }
+  .fi-maroon  { background: rgba(107,26,26,0.1); }
+  .fi-lotus   { background: rgba(212,84,122,0.1); }
+
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--text-dark);
+    margin-bottom: 12px;
+  }
+  .feature-desc { font-size: 0.9rem; color: var(--text-light); line-height: 1.7; }
+
+  /* ── CALCULATOR SECTION ── */
+  .calculator-section {
+    padding: 96px 48px;
+    background: var(--warm-white);
+  }
+
+  .calc-wrapper {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    align-items: start;
+  }
+
+  .calc-panel {
+    background: var(--ivory);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 40px;
+  }
+
+  .calc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 700; color: var(--text-dark);
+    margin-bottom: 8px;
+  }
+  .calc-subtitle { font-size: 0.85rem; color: var(--text-light); margin-bottom: 32px; }
+
+  .tab-bar {
+    display: flex; gap: 4px; margin-bottom: 28px;
+    background: rgba(107,26,26,0.07); border-radius: 6px; padding: 4px;
+  }
+
+  .tab-btn {
+    flex: 1; padding: 8px 12px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem; font-weight: 600; cursor: pointer; border: none;
+    background: transparent; color: var(--text-mid);
+    border-radius: 4px; transition: all 0.2s; letter-spacing: 0.03em;
+  }
+  .tab-btn.active {
+    background: var(--deep-maroon); color: var(--ivory);
+  }
+
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    display: block; font-size: 0.8rem; font-weight: 600;
+    color: var(--text-mid); margin-bottom: 8px; letter-spacing: 0.04em;
+  }
+  .form-label .unit {
+    font-weight: 400; color: var(--text-light); margin-left: 4px;
+  }
+
+  .input-wrap { position: relative; }
+  .input-prefix {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    font-size: 0.85rem; color: var(--text-light); font-weight: 600;
+    pointer-events: none;
+  }
+
+  .form-input {
+    width: 100%; padding: 11px 14px 11px 32px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    color: var(--text-dark);
+    background: var(--warm-white); border: 1.5px solid var(--border);
+    border-radius: 6px; transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--saffron); }
+  .form-input.no-prefix { padding-left: 14px; }
+
+  .calc-btn {
+    width: 100%; padding: 14px; background: var(--deep-maroon);
+    color: var(--ivory); border: none; border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; letter-spacing: 0.05em; transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .calc-btn:hover { background: var(--crimson); }
+
+  /* Results panel */
+  .results-panel {
+    background: linear-gradient(160deg, var(--deep-maroon), #3D0E0E);
+    border-radius: 12px; padding: 40px; color: var(--ivory);
+    position: sticky; top: 96px;
+  }
+
+  .results-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; margin-bottom: 4px;
+  }
+  .results-sub { font-size: 0.82rem; opacity: 0.6; margin-bottom: 32px; }
+
+  .result-item {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px; padding: 20px; margin-bottom: 16px;
+    transition: background 0.2s;
+  }
+  .result-item:hover { background: rgba(255,255,255,0.12); }
+
+  .result-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; opacity: 0.65; margin-bottom: 8px;
+  }
+  .result-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700;
+  }
+  .result-value.positive { color: #7EFFC0; }
+  .result-value.negative { color: #FF8A80; }
+  .result-value.neutral  { color: var(--gold); }
+
+  .result-badge {
+    display: inline-block; font-size: 0.7rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px; margin-top: 6px;
+    letter-spacing: 0.06em;
+  }
+  .badge-good { background: rgba(126,255,192,0.15); color: #7EFFC0; }
+  .badge-warn { background: rgba(255,200,80,0.15); color: #FFC850; }
+  .badge-bad  { background: rgba(255,138,128,0.15); color: #FF8A80; }
+
+  .divider-line {
+    height: 1px; background: rgba(255,255,255,0.1); margin: 20px 0;
+  }
+
+  .results-note {
+    font-size: 0.75rem; opacity: 0.45; line-height: 1.6;
+    margin-top: 16px; font-style: italic;
+  }
+
+  /* ── SCENARIO SECTION ── */
+  .scenario-section {
+    padding: 96px 48px;
+    background: var(--ivory);
+  }
+
+  .scenario-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 24px;
+  }
+
+  .scenario-card {
+    border-radius: 10px; padding: 32px;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden; cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+  .scenario-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+  .sc-pessimistic {
+    background: linear-gradient(140deg, #FEF0EE, #FAF6EE);
+    border-color: rgba(160,39,42,0.2);
+  }
+  .sc-base {
+    background: linear-gradient(140deg, #FEFAEE, #FAF6EE);
+    border-color: rgba(201,147,26,0.3);
+  }
+  .sc-optimistic {
+    background: linear-gradient(140deg, #EEFAF7, #FAF6EE);
+    border-color: rgba(26,122,110,0.2);
+  }
+
+  .sc-badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 20px; margin-bottom: 20px;
+  }
+  .sc-pessimistic .sc-badge { background: rgba(160,39,42,0.12); color: var(--crimson); }
+  .sc-base .sc-badge        { background: rgba(201,147,26,0.15); color: var(--gold); }
+  .sc-optimistic .sc-badge  { background: rgba(26,122,110,0.12); color: var(--teal); }
+
+  .sc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 16px;
+    color: var(--text-dark);
+  }
+
+  .sc-metric { display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .sc-metric:last-of-type { border-bottom: none; }
+  .sc-metric-label { font-size: 0.8rem; color: var(--text-light); }
+  .sc-metric-val {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.1rem;
+  }
+  .sc-pessimistic .sc-metric-val { color: var(--crimson); }
+  .sc-base .sc-metric-val        { color: var(--gold); }
+  .sc-optimistic .sc-metric-val  { color: var(--teal); }
+
+  /* ── CHART ── */
+  .chart-section {
+    padding: 96px 48px;
+    background: var(--warm-white);
+  }
+  .chart-wrapper {
+    max-width: 900px; margin: 0 auto;
+    background: var(--ivory); border: 1px solid var(--border);
+    border-radius: 12px; padding: 40px;
+  }
+  .chart-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .chart-sub { font-size: 0.82rem; color: var(--text-light); margin-bottom: 32px; }
+
+  canvas { width: 100% !important; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep-maroon); color: var(--ivory);
+    padding: 56px 48px 36px;
+  }
+  .footer-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 12px;
+  }
+  .footer-tagline { font-size: 0.85rem; opacity: 0.6; line-height: 1.7; }
+  .footer-sinhala {
+    font-family: 'Noto Serif Sinhala', serif;
+    font-size: 0.9rem; opacity: 0.5; margin-top: 8px;
+  }
+  .footer-col-title {
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; opacity: 0.5; margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; font-size: 0.88rem; opacity: 0.75;
+    color: var(--ivory); text-decoration: none; margin-bottom: 10px;
+    transition: opacity 0.2s;
+  }
+  .footer-col a:hover { opacity: 1; }
+  .footer-bottom {
+    max-width: 1100px; margin: 24px auto 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.78rem; opacity: 0.4;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(24px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity:1; transform: translateY(0); }
+
+  /* Decorative divider */
+  .lotus-divider {
+    text-align: center; padding: 16px 0;
+    font-size: 1.4rem; opacity: 0.3; color: var(--gold);
+    letter-spacing: 0.5em;
+  }
+
+  /* Input tab panels */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 120px 24px 60px; }
+    .hero-stats { gap: 24px; }
+    .features, .calculator-section, .scenario-section, .chart-section { padding: 72px 24px; }
+    .calc-wrapper { grid-template-columns: 1fr; }
+    .scenario-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .hero-mandala { display: none; }
+    footer { padding: 48px 24px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🪷</div>
+    <div>
+      <span class="nav-logo-text">Vesak Financial</span>
+      <span class="nav-logo-sub">Strategic Cost Intelligence</span>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#calculator">Calculator</a>
+    <a href="#scenarios">Scenarios</a>
+    <a href="#insights">Insights</a>
+    <a href="#calculator" class="nav-cta">Start Analysis</a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- SVG Mandala -->
+  <svg class="hero-mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="190" stroke="#C9931A" stroke-width="1"/>
+    <circle cx="200" cy="200" r="150" stroke="#C9931A" stroke-width="1" stroke-dasharray="8 6"/>
+    <circle cx="200" cy="200" r="110" stroke="#C9931A" stroke-width="1"/>
+    <circle cx="200" cy="200" r="70"  stroke="#C9931A" stroke-width="1" stroke-dasharray="4 4"/>
+    <circle cx="200" cy="200" r="30"  stroke="#C9931A" stroke-width="1.5"/>
+    <!-- petals -->
+    <g stroke="#A0272A" stroke-width="0.8" opacity="0.7">
+      <ellipse cx="200" cy="120" rx="14" ry="40" transform="rotate(0 200 200)"/>
+      <ellipse cx="200" cy="120" rx="14" ry="40" transform="rotate(45 200 200)"/>
+      <ellipse cx="200" cy="120" rx="14" ry="40" transform="rotate(90 200 200)"/>
+      <ellipse cx="200" cy="120" rx="14" ry="40" transform="rotate(135 200 200)"/>
+      <ellipse cx="200" cy="120" rx="14" ry="40" transform="rotate(180 200 200)"/>
+      <ellipse cx="200" cy="120" rx="14" ry="40" transform="rotate(225 200 200)"/>
+      <ellipse cx="200" cy="120" rx="14" ry="40" transform="rotate(270 200 200)"/>
+      <ellipse cx="200" cy="120" rx="14" ry="40" transform="rotate(315 200 200)"/>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Sri Lanka Strategic Finance Platform</div>
+    <h1 class="hero-title">
+      Long-Term Decision<br>
+      & <em>Cost Management</em><br>
+      Analysis
+    </h1>
+    <p class="hero-sinhala">දිගුකාලීන ආයෝජන හා පිරිවැය කළමනාකරණය</p>
+    <p class="hero-desc">
+      A strategic platform built for Sri Lankan businesses, policymakers, and analysts — integrating NPV, IRR, and scenario modelling with cultural and economic context specific to our island's growth trajectory.
+    </p>
+    <div class="hero-actions">
+      <a href="#calculator" class="btn-primary">▶ Run Analysis</a>
+      <a href="#scenarios" class="btn-secondary">View Scenarios</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">NPV</span>
+        <span class="hero-stat-label">Net Present Value</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">IRR</span>
+        <span class="hero-stat-label">Rate of Return</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">PBP</span>
+        <span class="hero-stat-label">Payback Period</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LOTUS DIVIDER ── -->
+<div class="lotus-divider">⸻ 🪷 ⸻</div>
+
+<!-- ── FEATURES ── -->
+<section class="features" id="features">
+  <div class="section-header fade-in">
+    <span class="section-eyebrow">Core Capabilities</span>
+    <h2 class="section-title">Everything You Need for<br>Strategic Financial Decisions</h2>
+    <p class="section-desc">Rooted in Sri Lanka's economic landscape, our tools combine global financial standards with local market intelligence.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card fade-in">
+      <div class="feature-icon fi-saffron">📊</div>
+      <div class="feature-title">Comprehensive Cost Analysis</div>
+      <p class="feature-desc">Break down fixed, variable, and indirect costs tailored to Sri Lankan MSME and corporate structures. Aligned with CBSL reporting standards.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon fi-crimson">💰</div>
+      <div class="feature-title">NPV & IRR Calculator</div>
+      <p class="feature-desc">Compute Net Present Value, Internal Rate of Return, and Payback Period in LKR with adjustable discount rates reflecting local inflation dynamics.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon fi-teal">🌊</div>
+      <div class="feature-title">Scenario Analysis</div>
+      <p class="feature-desc">Model Pessimistic, Base, and Optimistic scenarios factoring in Sri Lanka's currency fluctuations, seasonal trade patterns, and tourism cycles.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon fi-gold">📈</div>
+      <div class="feature-title">Sensitivity Analysis</div>
+      <p class="feature-desc">Stress-test your assumptions across interest rates, exchange rates (LKR/USD), and commodity prices relevant to Ceylon tea, gems, and exports.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon fi-maroon">🏛️</div>
+      <div class="feature-title">Policy Impact Modelling</div>
+      <p class="feature-desc">Evaluate public investment feasibility under fiscal frameworks guided by IMF programmes and Sri Lanka's national development priorities.</p>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon fi-lotus">🎯</div>
+      <div class="feature-title">Value Maximization</div>
+      <p class="feature-desc">Identify optimal resource allocation strategies to maximize stakeholder value while managing risk in the post-crisis recovery context.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CALCULATOR ── -->
+<section class="calculator-section" id="calculator">
+  <div class="section-header fade-in">
+    <span class="section-eyebrow">Investment Tools</span>
+    <h2 class="section-title">Financial Appraisal Calculator</h2>
+    <p class="section-desc">Enter your project parameters in Sri Lankan Rupees (LKR) to generate instant investment appraisal metrics.</p>
+  </div>
+
+  <div class="calc-wrapper">
+    <!-- Input Panel -->
+    <div class="calc-panel fade-in">
+      <div class="calc-title">Project Parameters</div>
+      <div class="calc-subtitle">All amounts in Sri Lankan Rupees (LKR)</div>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab('npv')">NPV</button>
+        <button class="tab-btn" onclick="switchTab('irr')">IRR</button>
+        <button class="tab-btn" onclick="switchTab('pbp')">Payback</button>
+        <button class="tab-btn" onclick="switchTab('cost')">Cost Split</button>
+      </div>
+
+      <!-- NPV Tab -->
+      <div class="tab-panel active" id="tab-npv">
+        <div class="form-group">
+          <label class="form-label">Initial Investment <span class="unit">(LKR)</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="npv-invest" placeholder="5,000,000" value="5000000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Annual Cash Inflow <span class="unit">(LKR)</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="npv-cashflow" placeholder="1,500,000" value="1500000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Discount Rate <span class="unit">(%)</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">%</span>
+            <input type="number" class="form-input" id="npv-rate" placeholder="12" value="12">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Project Duration <span class="unit">(Years)</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">yr</span>
+            <input type="number" class="form-input" id="npv-years" placeholder="7" value="7">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Salvage Value <span class="unit">(LKR)</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="npv-salvage" placeholder="500,000" value="500000">
+          </div>
+        </div>
+        <button class="calc-btn" onclick="calculateAll()">Calculate Investment Metrics →</button>
+      </div>
+
+      <!-- IRR Tab -->
+      <div class="tab-panel" id="tab-irr">
+        <div class="form-group">
+          <label class="form-label">Initial Investment <span class="unit">(LKR)</span></label>
+          <div class="input-wrap">
+            <span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="irr-invest" placeholder="10,000,000" value="10000000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Year 1 Cash Flow <span class="unit">(LKR)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="irr-y1" value="2000000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Year 2 Cash Flow <span class="unit">(LKR)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="irr-y2" value="3000000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Year 3 Cash Flow <span class="unit">(LKR)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="irr-y3" value="4000000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Year 4 Cash Flow <span class="unit">(LKR)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="irr-y4" value="4500000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Required Rate <span class="unit">(% hurdle)</span></label>
+          <div class="input-wrap"><span class="input-prefix">%</span>
+            <input type="number" class="form-input" id="irr-hurdle" value="15"></div>
+        </div>
+        <button class="calc-btn" onclick="calculateIRR()">Calculate IRR →</button>
+      </div>
+
+      <!-- Payback Tab -->
+      <div class="tab-panel" id="tab-pbp">
+        <div class="form-group">
+          <label class="form-label">Initial Investment <span class="unit">(LKR)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="pb-invest" value="8000000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Annual Net Cash Flow <span class="unit">(LKR)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="pb-flow" value="2000000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Inflation Rate <span class="unit">(LKR context, %)</span></label>
+          <div class="input-wrap"><span class="input-prefix">%</span>
+            <input type="number" class="form-input" id="pb-inflation" value="8"></div>
+        </div>
+        <button class="calc-btn" onclick="calculatePayback()">Calculate Payback →</button>
+      </div>
+
+      <!-- Cost Split Tab -->
+      <div class="tab-panel" id="tab-cost">
+        <div class="form-group">
+          <label class="form-label">Fixed Costs <span class="unit">(LKR / year)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="c-fixed" value="3000000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Variable Costs <span class="unit">(LKR / year)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="c-variable" value="1800000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Indirect / Overhead <span class="unit">(LKR / year)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="c-indirect" value="700000"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Revenue <span class="unit">(LKR / year)</span></label>
+          <div class="input-wrap"><span class="input-prefix">₨</span>
+            <input type="number" class="form-input" id="c-revenue" value="7000000"></div>
+        </div>
+        <button class="calc-btn" onclick="calculateCostSplit()">Analyse Cost Structure →</button>
+      </div>
+    </div>
+
+    <!-- Results Panel -->
+    <div class="results-panel fade-in" id="results-panel">
+      <div class="results-title">Analysis Results</div>
+      <div class="results-sub">Enter parameters and click Calculate</div>
+
+      <div class="result-item">
+        <div class="result-label">Net Present Value (NPV)</div>
+        <div class="result-value neutral" id="res-npv">—</div>
+        <div id="res-npv-badge"></div>
+      </div>
+
+      <div class="result-item">
+        <div class="result-label">Internal Rate of Return</div>
+        <div class="result-value neutral" id="res-irr">—</div>
+        <div id="res-irr-badge"></div>
+      </div>
+
+      <div class="result-item">
+        <div class="result-label">Payback Period</div>
+        <div class="result-value neutral" id="res-pbp">—</div>
+        <div id="res-pbp-badge"></div>
+      </div>
+
+      <div class="divider-line"></div>
+
+      <div class="result-item">
+        <div class="result-label">Profitability Index</div>
+        <div class="result-value neutral" id="res-pi">—</div>
+      </div>
+
+      <div class="result-item">
+        <div class="result-label">Gross Profit Margin</div>
+        <div class="result-value neutral" id="res-margin">—</div>
+      </div>
+
+      <div class="results-note" id="res-verdict">
+        Results will appear here after calculation. All values in Sri Lankan Rupees (LKR).
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SCENARIOS ── -->
+<section class="scenario-section" id="scenarios">
+  <div class="section-header fade-in">
+    <span class="section-eyebrow">Scenario Modelling</span>
+    <h2 class="section-title">Three-Horizon Financial Projections</h2>
+    <p class="section-desc">Based on Sri Lanka's post-2022 economic recovery trajectory, regional investment benchmarks, and IMF programme targets.</p>
+  </div>
+
+  <div class="scenario-grid">
+    <div class="scenario-card sc-pessimistic fade-in">
+      <span class="sc-badge">⚠ Pessimistic</span>
+      <div class="sc-title">Downside Risk<br>Scenario</div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Revenue Growth</span>
+        <span class="sc-metric-val">-4.5%</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Inflation Rate</span>
+        <span class="sc-metric-val">18%</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">NPV (LKR Mn)</span>
+        <span class="sc-metric-val">-2.8M</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Payback Period</span>
+        <span class="sc-metric-val">9.2 yrs</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Recommendation</span>
+        <span class="sc-metric-val">Defer</span>
+      </div>
+    </div>
+
+    <div class="scenario-card sc-base fade-in">
+      <span class="sc-badge">◎ Base Case</span>
+      <div class="sc-title">Expected<br>Scenario</div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Revenue Growth</span>
+        <span class="sc-metric-val">+6.8%</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Inflation Rate</span>
+        <span class="sc-metric-val">9%</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">NPV (LKR Mn)</span>
+        <span class="sc-metric-val">+3.4M</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Payback Period</span>
+        <span class="sc-metric-val">5.5 yrs</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Recommendation</span>
+        <span class="sc-metric-val">Proceed</span>
+      </div>
+    </div>
+
+    <div class="scenario-card sc-optimistic fade-in">
+      <span class="sc-badge">✦ Optimistic</span>
+      <div class="sc-title">Upside Growth<br>Scenario</div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Revenue Growth</span>
+        <span class="sc-metric-val">+14.2%</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Inflation Rate</span>
+        <span class="sc-metric-val">5%</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">NPV (LKR Mn)</span>
+        <span class="sc-metric-val">+9.1M</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Payback Period</span>
+        <span class="sc-metric-val">3.2 yrs</span>
+      </div>
+      <div class="sc-metric">
+        <span class="sc-metric-label">Recommendation</span>
+        <span class="sc-metric-val">Accelerate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CHART ── -->
+<section class="chart-section" id="insights">
+  <div class="section-header fade-in">
+    <span class="section-eyebrow">Financial Insights</span>
+    <h2 class="section-title">Cumulative Cash Flow Projection</h2>
+    <p class="section-desc">5-Year cumulative NPV across all three scenarios — calibrated to Sri Lanka's economic cycle.</p>
+  </div>
+
+  <div class="chart-wrapper fade-in">
+    <div class="chart-title">Scenario Cash Flow Comparison</div>
+    <div class="chart-sub">Cumulative Net Cash Flow (LKR Millions) — Years 1–7</div>
+    <canvas id="cashflowChart" height="320"></canvas>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">🪷 Vesak Financial</div>
+      <p class="footer-tagline">Strategic long-term decision intelligence for Sri Lankan businesses, policymakers, and analysts. Built with pride for the Pearl of the Indian Ocean.</p>
+      <p class="footer-sinhala">ශ්‍රී ලංකාවේ ආර්ථික ශක්තිය සඳහා ගොඩනැගිලී</p>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Tools</div>
+      <a href="#calculator">NPV Calculator</a>
+      <a href="#calculator">IRR Calculator</a>
+      <a href="#calculator">Payback Period</a>
+      <a href="#calculator">Cost Analysis</a>
+    </div>
+    <div class="footer-col">
+      <div class="footer-col-title">Resources</div>
+      <a href="#">CBSL Reports</a>
+      <a href="#">BOI Guidelines</a>
+      <a href="#">IMF Sri Lanka</a>
+      <a href="#">SLIDA Training</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Vesak Financial. Built for Sri Lanka 🇱🇰</span>
+    <span>All amounts in LKR unless stated otherwise</span>
+  </div>
+</footer>
+
+<!-- ── SCRIPTS ── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+
+/* ── TAB SWITCHING ── */
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+/* ── HELPERS ── */
+function fmtLKR(n) {
+  if (Math.abs(n) >= 1e6) return '₨' + (n/1e6).toFixed(2) + 'M';
+  if (Math.abs(n) >= 1e3) return '₨' + (n/1e3).toFixed(1) + 'K';
+  return '₨' + n.toFixed(0);
+}
+
+function npvCalc(rate, invest, cashflow, years, salvage) {
+  let pv = 0;
+  for (let t = 1; t <= years; t++) pv += cashflow / Math.pow(1 + rate/100, t);
+  pv += salvage / Math.pow(1 + rate/100, years);
+  return pv - invest;
+}
+
+/* ── NPV CALC ── */
+function calculateAll() {
+  const invest   = +document.getElementById('npv-invest').value;
+  const cashflow = +document.getElementById('npv-cashflow').value;
+  const rate     = +document.getElementById('npv-rate').value;
+  const years    = +document.getElementById('npv-years').value;
+  const salvage  = +document.getElementById('npv-salvage').value;
+
+  const npv = npvCalc(rate, invest, cashflow, years, salvage);
+  const pbp = invest / cashflow;
+  const pi  = (cashflow * ((1 - Math.pow(1+rate/100,-years))/(rate/100)) + salvage/Math.pow(1+rate/100,years)) / invest;
+
+  // Estimate IRR via Newton-Raphson
+  let irr = estimateIRR(invest, Array(years).fill(cashflow).map((v,i)=>i===years-1?v+salvage:v));
+
+  setResult('res-npv', fmtLKR(npv), npv >= 0 ? 'positive' : 'negative');
+  setResult('res-irr', irr.toFixed(1) + '%', irr >= rate ? 'positive' : 'negative');
+  setResult('res-pbp', pbp.toFixed(1) + ' yrs', pbp <= 5 ? 'positive' : pbp <= 8 ? 'neutral' : 'negative');
+  setResult('res-pi',  pi.toFixed(3), null);
+  document.getElementById('res-margin').textContent = '—';
+
+  setBadge('res-npv-badge', npv >= 0 ? 'ACCEPT PROJECT' : 'REJECT PROJECT', npv >= 0 ? 'badge-good' : 'badge-bad');
+  setBadge('res-irr-badge', irr >= rate ? `Exceeds hurdle (${rate}%)` : `Below hurdle (${rate}%)`, irr >= rate ? 'badge-good' : 'badge-bad');
+  setBadge('res-pbp-badge', pbp <= 5 ? 'Excellent payback' : pbp <= 8 ? 'Acceptable' : 'Too long', pbp <= 5 ? 'badge-good' : pbp <= 8 ? 'badge-warn' : 'badge-bad');
+
+  document.getElementById('res-verdict').innerHTML =
+    `<strong>Verdict:</strong> ${npv >= 0 ? '✅ Project adds value. Recommend proceeding.' : '❌ Project destroys value. Review assumptions.'} Discount rate reflects Sri Lanka market risk premium.`;
+}
+
+function calculateIRR() {
+  const invest = +document.getElementById('irr-invest').value;
+  const cfs = [
+    +document.getElementById('irr-y1').value,
+    +document.getElementById('irr-y2').value,
+    +document.getElementById('irr-y3').value,
+    +document.getElementById('irr-y4').value
+  ];
+  const hurdle = +document.getElementById('irr-hurdle').value;
+  const irr = estimateIRR(invest, cfs);
+  const npv = cfs.reduce((s, cf, i) => s + cf / Math.pow(1+hurdle/100, i+1), -invest);
+  const pbp = invest / (cfs.reduce((a,b)=>a+b,0)/cfs.length);
+
+  setResult('res-irr', irr.toFixed(2) + '%', irr >= hurdle ? 'positive' : 'negative');
+  setResult('res-npv', fmtLKR(npv), npv >= 0 ? 'positive' : 'negative');
+  setResult('res-pbp', pbp.toFixed(1) + ' yrs', null);
+  setResult('res-pi',  (1 + npv/invest).toFixed(3), null);
+  document.getElementById('res-margin').textContent = '—';
+  setBadge('res-irr-badge', irr >= hurdle ? '✅ Above hurdle rate' : '❌ Below hurdle rate', irr >= hurdle ? 'badge-good' : 'badge-bad');
+  document.getElementById('res-npv-badge').textContent = '';
+  document.getElementById('res-pbp-badge').textContent = '';
+  document.getElementById('res-verdict').innerHTML = `<strong>IRR Analysis:</strong> ${irr >= hurdle ? 'Investment exceeds minimum return threshold.' : 'Investment does not meet required return.'} Hurdle rate: ${hurdle}%.`;
+}
+
+function calculatePayback() {
+  const invest    = +document.getElementById('pb-invest').value;
+  const flow      = +document.getElementById('pb-flow').value;
+  const inflation = +document.getElementById('pb-inflation').value;
+  const pbp       = invest / flow;
+  // Discounted payback
+  let cumPV = 0; let dPbp = 0;
+  for (let t = 1; t <= 20; t++) {
+    cumPV += flow / Math.pow(1 + inflation/100, t);
+    if (cumPV >= invest && dPbp === 0) dPbp = t;
+  }
+  setResult('res-pbp', pbp.toFixed(2) + ' yrs', pbp <= 5 ? 'positive' : 'negative');
+  setResult('res-npv', 'Discounted: ' + (dPbp||'>20') + ' yrs', null);
+  setResult('res-irr', '—', null);
+  setResult('res-pi',  '—', null);
+  document.getElementById('res-margin').textContent = '—';
+  document.getElementById('res-npv-badge').textContent = '';
+  document.getElementById('res-irr-badge').textContent = '';
+  document.getElementById('res-pbp-badge').textContent = '';
+  document.getElementById('res-verdict').innerHTML = `Simple payback: <strong>${pbp.toFixed(1)} years</strong>. Inflation-adjusted payback: <strong>${dPbp || '>20'} years</strong> at ${inflation}% Sri Lanka inflation rate.`;
+}
+
+function calculateCostSplit() {
+  const fixed    = +document.getElementById('c-fixed').value;
+  const variable = +document.getElementById('c-variable').value;
+  const indirect = +document.getElementById('c-indirect').value;
+  const revenue  = +document.getElementById('c-revenue').value;
+  const total    = fixed + variable + indirect;
+  const profit   = revenue - total;
+  const margin   = ((profit / revenue) * 100);
+  const pi       = revenue / total;
+
+  setResult('res-npv', fmtLKR(profit), profit >= 0 ? 'positive' : 'negative');
+  setResult('res-irr', '—', null);
+  setResult('res-pbp', '—', null);
+  setResult('res-pi',  pi.toFixed(2) + 'x', null);
+  setResult('res-margin', margin.toFixed(1) + '%', margin > 20 ? 'positive' : margin > 0 ? 'neutral' : 'negative');
+
+  document.getElementById('res-npv-badge').innerHTML = `<span class="result-badge ${profit>=0?'badge-good':'badge-bad'}">${profit>=0?'PROFITABLE':'LOSS-MAKING'}</span>`;
+  document.getElementById('res-irr-badge').textContent = '';
+  document.getElementById('res-pbp-badge').textContent = '';
+
+  const fixedPct = (fixed/total*100).toFixed(0);
+  document.getElementById('res-verdict').innerHTML =
+    `Fixed costs: <strong>${fixedPct}%</strong> of total. Gross margin: <strong>${margin.toFixed(1)}%</strong>. ${margin > 20 ? '✅ Healthy margin.' : margin > 0 ? '⚠️ Thin margin — review costs.' : '❌ Operating at a loss.'}`;
+}
+
+/* ── IRR estimation (Newton-Raphson) ── */
+function estimateIRR(invest, cashflows) {
+  let rate = 0.1;
+  for (let iter = 0; iter < 100; iter++) {
+    let npv = -invest, dnpv = 0;
+    for (let t = 0; t < cashflows.length; t++) {
+      npv  += cashflows[t] / Math.pow(1+rate, t+1);
+      dnpv -= (t+1) * cashflows[t] / Math.pow(1+rate, t+2);
+    }
+    rate -= npv / dnpv;
+    if (Math.abs(npv) < 0.01) break;
+  }
+  return rate * 100;
+}
+
+function setResult(id, val, cls) {
+  const el = document.getElementById(id);
+  el.textContent = val;
+  el.className = 'result-value';
+  if (cls) el.classList.add(cls);
+}
+
+function setBadge(id, text, cls) {
+  document.getElementById(id).innerHTML = `<span class="result-badge ${cls}">${text}</span>`;
+}
+
+/* ── CHART ── */
+const ctx = document.getElementById('cashflowChart').getContext('2d');
+const years = ['Yr 0','Yr 1','Yr 2','Yr 3','Yr 4','Yr 5','Yr 6','Yr 7'];
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: years,
+    datasets: [
+      {
+        label: 'Pessimistic',
+        data: [-5, -3.2, -1.8, -0.6, 0.4, 1.0, 1.4, 1.6],
+        borderColor: '#A0272A', backgroundColor: 'rgba(160,39,42,0.08)',
+        borderWidth: 2.5, fill: false, tension: 0.35,
+        pointBackgroundColor: '#A0272A', pointRadius: 4
+      },
+      {
+        label: 'Base Case',
+        data: [-5, -3.0, -0.8, 1.6, 4.0, 6.5, 9.2, 12.1],
+        borderColor: '#C9931A', backgroundColor: 'rgba(201,147,26,0.08)',
+        borderWidth: 2.5, fill: false, tension: 0.35,
+        pointBackgroundColor: '#C9931A', pointRadius: 4
+      },
+      {
+        label: 'Optimistic',
+        data: [-5, -2.0, 1.5, 5.5, 10.2, 15.8, 22.0, 29.2],
+        borderColor: '#1A7A6E', backgroundColor: 'rgba(26,122,110,0.08)',
+        borderWidth: 2.5, fill: false, tension: 0.35,
+        pointBackgroundColor: '#1A7A6E', pointRadius: 4
+      }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: true,
+    plugins: {
+      legend: {
+        labels: { color: '#4A3728', font: { family: 'DM Sans', size: 12 }, usePointStyle: true }
+      },
+      tooltip: {
+        callbacks: {
+          label: ctx => ` ${ctx.dataset.label}: LKR ${ctx.parsed.y}M`
+        }
+      }
+    },
+    scales: {
+      x: { ticks: { color: '#8B6D5A', font: { family: 'DM Sans', size: 11 } }, grid: { color: 'rgba(200,147,26,0.1)' } },
+      y: {
+        ticks: { color: '#8B6D5A', font: { family: 'DM Sans', size: 11 }, callback: v => '₨' + v + 'M' },
+        grid: { color: 'rgba(200,147,26,0.1)' }
+      }
+    }
+  }
+});
+
+/* ── SCROLL FADE-IN ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+</script>
+</body>
+</html>
